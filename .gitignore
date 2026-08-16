@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Nada de audio, peso ou manifest entra aqui, em hipotese nenhuma.
+*.wav
+*.flac
+*.mp3
+*.pth
+*.ckpt
+*.safetensors
+*.jsonl
