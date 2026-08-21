@@ -137,6 +137,34 @@ bem por imunidade, não por correção. Se você vai treinar o Slow AR, corrija
 antes — e meça **decaimento de energia**, não `val/loss`, que ranqueia ao
 contrário.
 
+### A correção, e o que ela mede
+
+```python
+# embed()  — caminho de TREINO, corrigido
+x = self.embeddings(inp[:, 0]) + vq_embeds_sum
+
+if self.config.scale_codebook_embeddings:
+    mascara = is_semantic.unsqueeze(-1).expand_as(x)
+    x = torch.where(mascara, x / math.sqrt(self.config.num_codebooks + 1), x)
+return x
+```
+
+Medido no s2-pro **cru**, sem treinar nada, com `probe_format.py` (n=64,
+semente 7). A versão sem escala fica atrás de um gate por variável de ambiente,
+para o A/B ser o mesmo binário:
+
+| formato | | loss | texto | semântico | top5 |
+|---|---|---:|---:|---:|---:|
+| `atual` | sem escala | 29,393 | 12,608 | 16,784 | 0,0057 |
+| | com escala | 29,268 | 12,467 | 16,801 | 0,0033 |
+| `ref` (o de treino) | sem escala | 13,663 | 6,352 | 7,311 | 0,0434 |
+| | **com escala** | **11,571** | **4,844** | 6,727 | **0,1185** |
+
+A run sem escala reproduz o 29,70 / 13,70 do Bug 1 — o controle é o mesmo, não
+é medida nova de outra coisa. No formato `ref` a escala derruba **2,09** de
+perda e quase **triplica o top5**. O formato `atual` mal se mexe: ele está fora
+da distribuição por outro motivo, e esta correção não o salva.
+
 ---
 
 ## Licença

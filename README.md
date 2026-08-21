@@ -3,6 +3,9 @@
 Notas de um estudo de adaptação de TTS ao **português brasileiro**, usando
 **[Fish Audio S2 Pro](https://huggingface.co/fishaudio/s2-pro)**.
 
+Por **[JoaoZaokk](https://github.com/JoaoZaokk)** — laboratório, curadoria,
+direção e as decisões de escuta.
+
 Isto é a **escrita**, não o laboratório. O que está aqui é o que serve para
 outra pessoa: o que foi medido, o que deu errado, e os dois bugs de fine-tune
 com reprodução. O pipeline de dados, os scripts internos e os manifests ficam
@@ -16,22 +19,48 @@ fora — dependem da máquina onde rodam e não ajudam ninguém.
 ## Resultado
 
 **→ [`JoaoZaokk/fish-s2-pro-ptbr-lora`](https://huggingface.co/JoaoZaokk/fish-s2-pro-ptbr-lora)**
-— dois adaptadores LoRA, sem os pesos base.
+— três adaptadores LoRA, sem os pesos base. O recomendado é o `ptbr-2h-256spk-scalefix`.
 
 Medido em 216 frases, 24 locutores do split `dev` do Common Voice, disjunto de
 todo pack de treino:
 
-| | base (Fish Audio) | 2 h / 46 loc | 2 h / 256 loc |
-|---|---|---|---|
-| CER ↓ | 0,0220 | **0,0180** | 0,0195 |
-| WER ↓ | 0,0486 | **0,0404** | 0,0472 |
-| similaridade ↑ | 0,9577 | 0,9566 | 0,9574 |
-| decaimento | −5,70 dB | −5,68 dB | −5,81 dB |
+| | base (Fish Audio) | 2 h / 46 loc | 2 h / 256 loc | 2 h / 256 loc **+ fix** |
+|---|---|---|---|---|
+| CER ↓ | 0,0220 | **0,0180** | 0,0195 | 0,0183 |
+| WER ↓ | 0,0486 | **0,0404** | 0,0472 | 0,0429 |
+| similaridade ↑ | 0,9577 | 0,9566 | 0,9574 | 0,9571 |
+| decaimento ↑ | −5,70 dB | −5,68 dB | −5,81 dB | **−5,32 dB** |
 
 Leitura honesta: **ganho pequeno em inteligibilidade, empate no resto.** Dois
 testes cegos pareados contra o base deram 6–6 e 4–5 (p = 1,000 nos dois). O que
 os adaptadores comprovadamente **não** fazem é estragar o modelo base — e essa
 foi a parte que deu trabalho.
+
+### O que a correção do bug de escala rendeu
+
+O `+ fix` é o mesmo experimento do `2 h / 256 loc` rodado de novo, com uma
+divisão a mais no `embed()`. Mesmo pack, mesma LoRA, mesmos 3000 passos, mesmo
+`lr`. Pareado item a item nas 216 frases:
+
+| métrica | 256 loc | + fix | delta | fix melhor em | p |
+|---|---:|---:|---:|---:|---:|
+| **decaimento** | −6,1264 dB | **−5,4809 dB** | **+0,65 dB** | 129/216 | **0,0052** |
+| CER | 0,0195 | 0,0183 | −0,0012 | 24 × 13 (179 empates) | 0,099 |
+| similaridade | 0,9548 | 0,9543 | −0,0005 | 97/215 | 0,17 |
+| rolloff | 4337,6 Hz | 4270,7 Hz | −67,0 Hz | 99/216 | 0,25 |
+
+Quatro testes na mesma família; com Bonferroni o limiar vira 0,0125 e o
+decaimento passa mesmo assim. O CER inclina a favor mas não fecha.
+
+**A correção devolve fôlego no fim da frase e não cobra nada.** O tamanho também
+é o previsto: o Fast AR fica *depois* da pilha slow e nunca vê o embedding cru,
+então é largamente imune. São +0,65 dB aqui contra os ~+23 dB que o `notmax123`
+mediu corrigindo no Slow AR.
+
+Uma coisa que o número não pega, vinda da escuta: **com o fix, um `[whisper]` no
+início da frase produz sussurro de verdade; sem ele, não.** É uma observação
+única, não uma medida — mas é consistente com o mecanismo, porque a posição 0 é
+onde a escala errada mais distorce o condicionamento inicial.
 
 ## Os dois bugs
 
@@ -47,7 +76,9 @@ Estão em [`fixes/`](fixes/), com reprodução e correção.
    treino.** Todo fine-tune treina contra embeddings 3,32× maiores do que os da
    geração. Achado por
    [`notmax123`](https://huggingface.co/notmax123/Fish-Audio-S2-Pro-He), não por
-   nós; confirmado aqui lendo as duas funções.
+   nós. **Confirmado por medida no modelo cru:** aplicar a escala derruba a
+   perda no formato de treino de 13,663 para 11,571 e leva o top5 de 0,0434 a
+   0,1185 — quase o triplo. Detalhe em [`fixes/README.md`](fixes/README.md).
 
 ## O que a gente leu errado
 
@@ -120,16 +151,51 @@ Adaptar para português **não** estragou inglês nem espanhol.
 | `[laughing]`, `[chuckle]` repetidas | duração escala monotonicamente com a repetição |
 | maioria das tags de volume | sem efeito mensurável |
 
-Um controle com tags inventadas (`[glorp]`, `[zibbe]`, `[thubner]`) em 1×/2×/4×
-foi iniciado e **nunca analisado**. Ele decide se o modelo interpreta a tag ou
-apenas conta colchetes. Enquanto isso não fechar, nenhuma conclusão sobre tags
-está pronta.
+### O controle com tags inventadas — fechado
+
+A dúvida era se o modelo interpreta a tag ou apenas conta colchetes. Escada
+inteira regerada numa condição só, 13 prompts × 3 sementes, depois 5 condições
+× 8 sementes em n=4, tudo transcrito com Whisper large-v3.
+
+**Nenhuma palavra placebo é pronunciada** em nenhuma amostra.
+
+| condição | duração | vs controle | p |
+|---|---:|---:|---:|
+| controle | 6,44 ± 0,25 s | — | — |
+| placebo (`[glorp]`, `[zibbe]`), n=16 | 7,17 ± 0,53 s | +0,73 s | 0,0019 |
+| tag real (`[laughing]`, `[chuckle]`), n=16 | 8,09 ± 0,58 s | +1,65 s | <1e-5 |
+| real vs placebo | — | +0,92 s | 0,00006 |
+
+**44% do alongamento acontece com uma tag inventada.** O colchete sozinho já
+faz alguma coisa; a tag real faz mais em cima disso. As duas hipóteses estavam
+meio certas.
+
+Com 3 sementes os placebos pareciam planos (+0,16 e +0,35 s) — só em n=4 com 8
+sementes a diferença apareceu. Fica o registro de que a leitura de 3 sementes
+teria virado uma afirmação errada aqui.
 
 **Um efeito que replicou:** referência gravada **com** colchetes na própria
 transcrição gera saída mais longa que a mesma referência sem — 13 de 15 pares,
 teste de sinal p = 0,0074, média 12,70 s → 13,41 s (+5,6%). O texto gerado não
 tem tag em nenhum dos lados. Se é expressividade ou só fala mais devagar, ainda
 não está resolvido.
+
+### O que estes testes NÃO cobrem
+
+Tudo acima usa **tag de palavra solta** (`[whisper]`, `[laughing]`, `[sad]`).
+O model card oficial do S2 Pro diz outra coisa:
+
+> "Rather than relying on a fixed set of predefined tags, S2 Pro accepts
+> **free-form textual descriptions** — such as `[whisper in small voice]`,
+> `[professional broadcast tone]`, or `[pitch up]`"
+> — "15,000+ unique tags supported"
+
+Palavra solta também está documentada, então não é forma inválida. Mas a
+**descrição livre não foi testada aqui**, e é plausível que uma frase condicione
+melhor por carregar mais sinal.
+
+Leitura honesta: estes números medem que **tag de palavra solta é pouco
+confiável**. Não medem que o controle por tag não funcione.
 
 ## Receita dos adaptadores
 
@@ -154,10 +220,20 @@ do Hugging Face.
 
 ```
 README.md      estas notas
+notes/         o que foi medido sobre texto e desempenho
 fixes/         os dois bugs, com reprodução e correção
 LICENSE        MIT, para o código deste repositório
 LICENSES.md    as licenças das fontes usadas
 ```
+
+- **[`notes/simbolos-e-normalizacao.md`](notes/simbolos-e-normalizacao.md)** —
+  o que cada símbolo produz no s2-pro, medido, com a saída literal de cada caso.
+  Qual entrada quebra, o que ela vira, e qual forma escrita o modelo lê certo.
+  Inclui as regras que foram para o lixo assim que alguém escutou.
+- **[`notes/desempenho-upstream.md`](notes/desempenho-upstream.md)** — três
+  patches de terceiros, abertos e não mergeados, que aceleram o S2 Pro e cortam
+  VRAM. Crédito dos autores; aqui é só o mapa e o motivo de `git log` não
+  mostrar.
 
 **O que não está, de propósito:** áudio, pesos, manifests, os scripts de
 aquisição e curadoria, e a configuração da máquina. O áudio de treino inclui
@@ -178,6 +254,25 @@ independentes**: a licença da Fish Audio no modelo base, e a CC BY-NC-SA do
 TAGARELA nos dados. Uso comercial dos materiais da Fish Audio ou de qualquer
 obra derivada exige acordo escrito separado com a Fish Audio
 (business@fish.audio).
+
+## Autoria
+
+**[JoaoZaokk](https://github.com/JoaoZaokk)** — autor do trabalho. Montou o
+laboratório, curou os dados, dirigiu os experimentos e decidiu o rumo em cada
+bifurcação.
+
+Vale destacar uma contribuição específica, porque é a que mais mudou o
+resultado: **as correções vieram do ouvido dele, não das métricas.** Sete vezes
+neste projeto uma medida disse "está tudo igual" e a escuta disse "não está" —
+e a escuta estava certa nas sete. O corte no fim da frase, o inglês com sotaque
+que era a referência e não o modelo, o checkpoint de menor perda que era o pior
+de ouvir: nenhum desses foi achado por um número. Vários dos métodos descritos
+aqui — `decaimento_db`, o banco de vozes limpo, a regra de não escolher
+checkpoint por `val/loss` — existem porque uma métrica falhou primeiro e alguém
+percebeu ouvindo.
+
+A coleta de vozes sintéticas (103 personagens, avaliados um a um de ouvido, com
+a nota escrita no nome da pasta) também é dele.
 
 ## Créditos
 
