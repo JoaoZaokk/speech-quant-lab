@@ -1,15 +1,30 @@
-# PT-BR Audio Lab
+# Speech Quant Lab
 
-Notas de um estudo de adaptação de TTS ao **português brasileiro**, usando
-**[Fish Audio S2 Pro](https://huggingface.co/fishaudio/s2-pro)**.
+**Training, quantization, acceleration and evaluation for TTS/STT models.**
 
 Por **[JoaoZaokk](https://github.com/JoaoZaokk)** — laboratório, curadoria,
 direção e as decisões de escuta.
 
-Isto é a **escrita**, não o laboratório. O que está aqui é o que serve para
-outra pessoa: o que foi medido, o que deu errado, e os dois bugs de fine-tune
-com reprodução. O pipeline de dados, os scripts internos e os manifests ficam
-fora — dependem da máquina onde rodam e não ajudam ninguém.
+Bancada aberta. O que está aqui é o que serve para outra pessoa: **os números
+com o método que os produziu**, o código que roda os benchmarks, e o que deu
+errado — inclusive as medições minhas que estavam furadas e custaram horas.
+
+Três modelos passaram por aqui:
+
+| modelo | o que foi feito | estado |
+|---|---|---|
+| **[Fish Audio S2 Pro](https://huggingface.co/fishaudio/s2-pro)** | LoRA PT-BR, dois bugs de fine-tune, 5x no passo de treino | o mais coberto |
+| **LFM** | LoRA PT-BR — CER 0,4234 → 0,0192 em 7 h | treina e aprende; `torch.compile` **piora** aqui |
+| **VoxCPM** | avaliado contra os outros | sem veredito — o "ganho" que eu media era sorteio de voz |
+
+A parte de aceleração e quantização **não é específica de TTS**: o perfil de
+kernel, o INT8, o bucket por comprimento e as armadilhas de `torch.compile`
+valem para qualquer transformer com sequência curta.
+
+**O que fica de fora, e por quê:** áudio, manifests, pesos e checkpoints. O
+áudio de treino inclui TAGARELA (CC BY-NC-SA 4.0), que não pode ser
+redistribuído daqui, e os manifests carregam as transcrições dele. Código,
+benchmark e resultado ficam todos aqui.
 
 > **Built with Fish Audio.**
 > O modelo base, o codec, o tokenizer e toda a capacidade multilíngue são da
@@ -220,11 +235,17 @@ do Hugging Face.
 
 ```
 README.md      estas notas
-notes/         o que foi medido sobre texto e desempenho
-fixes/         os dois bugs, com reprodução e correção
+notes/         o que foi medido: texto, desempenho, aceleração
+fixes/         bugs de fine-tune, com reprodução e correção
+bench/         os scripts que produziram cada número
+accel/         GEMM INT8 para os lineares congelados
+reports/       a saída crua dos benchmarks, em JSON
 LICENSE        MIT, para o código deste repositório
 LICENSES.md    as licenças das fontes usadas
 ```
+
+Os benchmarks acham o checkpoint por `$FISH_CKPT` ou `--ckpt`; não há caminho
+de máquina em lugar nenhum.
 
 - **[`notes/simbolos-e-normalizacao.md`](notes/simbolos-e-normalizacao.md)** —
   o que cada símbolo produz no s2-pro, medido, com a saída literal de cada caso.
@@ -242,10 +263,28 @@ LICENSES.md    as licenças das fontes usadas
   packing. Inclui o que **não** funcionou e os quatro erros de medição que quase
   viraram número publicado.
 
-**O que não está, de propósito:** áudio, pesos, manifests, os scripts de
-aquisição e curadoria, e a configuração da máquina. O áudio de treino inclui
-TAGARELA, que é CC BY-NC-SA 4.0 e não pode ser redistribuído daqui, e os
-manifests carregam as transcrições dele.
+- **[`fixes/lora-slow-ar.md`](fixes/lora-slow-ar.md)** — dois bugs que fazem o
+  LoRA treinar a metade errada do DualAR: `setup_lora` não tem prefixo `slow_*`
+  (só `fast_*`), então "treinar só o Slow" é impossível sem patch; e
+  `use_reentrant=True` mata o treino assim que o LoRA é parcial, com uma
+  mensagem que não aponta para nenhum dos dois. Compostos, deram **p = 1** num
+  teste de notação — eu estava treinando o subsistema que não lê texto.
+- **[`bench/`](bench)** — `bench_int8_kernel.py` (GEMM isolado por forma),
+  `bench_treino_fish.py` (passo de treino, um acelerador por vez),
+  `perfil_passo_fish.py` (`torch.profiler`, kernel a kernel),
+  `erro_int8_fish.py` (erro nos logits e no gradiente da LoRA),
+  `medir_padding_fish.py` (quanto do lote é padding e quanto o bucket salva),
+  `matriz_aceleradores.py` (kernel × compile × batch, um processo por célula).
+- **[`accel/int8_linear.py`](accel/int8_linear.py)** — troca os `nn.Linear`
+  **congelados** por GEMM INT8, mantendo `weight` no `state_dict` com o mesmo
+  nome. O backward vai em bf16 sobre o peso original, o que o torna exato, e o
+  autograd é registrado **no op** — não numa `autograd.Function`, pelo motivo
+  medido na nota.
+
+**O que não está, de propósito:** áudio, pesos, manifests, checkpoints e os
+scripts de aquisição e curadoria. O áudio de treino inclui TAGARELA, que é
+CC BY-NC-SA 4.0 e não pode ser redistribuído daqui, e os manifests carregam as
+transcrições dele.
 
 ## Licenças
 

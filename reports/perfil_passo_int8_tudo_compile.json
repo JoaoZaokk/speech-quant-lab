@@ -1,0 +1,569 @@
+{
+  "braco": "int8_tudo_compile",
+  "tokens": 160,
+  "batch": 1,
+  "ms_por_passo": 122.97762324999995,
+  "familias": {
+    "outros": 3.2583691249998927,
+    "reducao": 5.776636625000017,
+    "elementwise": 0.5060336250000393,
+    "GEMM int8": 22.248875625000473,
+    "GEMM bf16": 81.77839799999943,
+    "copia": 2.216169125000082,
+    "otimizador": 7.193141124999991
+  },
+  "kernels": {
+    "_ZN7cutlass7Kernel2INS_4gemm6kernel22DefaultGemmWithVisitorIaNS_6layout8RowMajorELNS_16ComplexTransformE0ELi16EaNS4_11ColumnMajorELS6_0ELi16ENS_10bfloat16_tES5_Li8EifNS_4arch15OpClassTensorOpENS9_4Sm80ENS1_9GemmShapeILi128ELi128ELi64EEENSC_ILi64ELi64ELi64EEENSC_ILi16ELi8ELi32EEENS_8epilogue11threadblock13TreeVisitor2xINSH_15VisitorAuxStoreINSH_22OutputTileThreadLayoutISD_SE_S8_Li8ELi1EEES8_LNS_15FloatRoundStyleE2EN4cute5tupleIJxNSN_1CILi1EEExEEEEEJNSI_INSH_14VisitorComputeINS_10multipliesES8_fLSM_2EvEEJNSI_INST_ISU_ffLSM_2EvEEJNSH_15VisitorAccFetchENSH_19VisitorColBroadcastISL_fNSO_IJSQ_NSP_ILi0EEEiEEELb1EEEEEENSH_19VisitorRowBroadcastISL_fNSO_IJSZ_SQ_iEEELb1EEEEEEEEEN53_GLOBAL__N__2cf262d1_20_cutlass_gemm_int8_cu_141d0f9829ThreadblockSwizzleLeanStreamKELi4ENS9_21OpMultiplyAddSaturateELi1EE10SelectBaseIS19_vEEEEvNT_6ParamsE": {
+      "ms": 16.259746374999942,
+      "chamadas": 194
+    },
+    "ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_32x1_nn": {
+      "ms": 14.688559999999873,
+      "chamadas": 17
+    },
+    "ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_32x6_nn": {
+      "ms": 13.180514625000157,
+      "chamadas": 72
+    },
+    "_ZN7cutlass7Kernel2INS_4gemm6kernel22DefaultGemmWithVisitorIaNS_6layout8RowMajorELNS_16ComplexTransformE0ELi16EaNS4_11ColumnMajorELS6_0ELi16ENS_10bfloat16_tES5_Li8EifNS_4arch15OpClassTensorOpENS9_4Sm80ENS1_9GemmShapeILi128ELi256ELi64EEENSC_ILi64ELi64ELi64EEENSC_ILi16ELi8ELi32EEENS_8epilogue11threadblock13TreeVisitor2xINSH_15VisitorAuxStoreINSH_22OutputTileThreadLayoutISD_SE_S8_Li8ELi1EEES8_LNS_15FloatRoundStyleE2EN4cute5tupleIJxNSN_1CILi1EEExEEEEEJNSI_INSH_14VisitorComputeINS_10multipliesES8_fLSM_2EvEEJNSI_INST_ISU_ffLSM_2EvEEJNSH_15VisitorAccFetchENSH_19VisitorColBroadcastISL_fNSO_IJSQ_NSP_ILi0EEEiEEELb1EEEEEENSH_19VisitorRowBroadcastISL_fNSO_IJSZ_SQ_iEEELb1EEEEEEEEENS1_11threadblock30GemmIdentityThreadblockSwizzleILi1EEELi3ENS9_21OpMultiplyAddSaturateELi1EE10SelectBaseIS1A_vEEEEvNT_6ParamsE": {
+      "ms": 8.599263624999894,
+      "chamadas": 26
+    },
+    "ampere_bf16_s16816gemm_bf16_256x128_ldg8_f2f_stages_32x3_nn": {
+      "ms": 8.091169374999943,
+      "chamadas": 5
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_256x64_32x4_nn_align8EEvNT_6ParamsE": {
+      "ms": 7.2152108750000865,
+      "chamadas": 36
+    },
+    "_ZN7cutlass7Kernel2INS_4gemm6kernel22DefaultGemmWithVisitorIaNS_6layout8RowMajorELNS_16ComplexTransformE0ELi16EaNS4_11ColumnMajorELS6_0ELi16ENS_10bfloat16_tES5_Li8EifNS_4arch15OpClassTensorOpENS9_4Sm80ENS1_9GemmShapeILi64ELi128ELi64EEENSC_ILi32ELi64ELi64EEENSC_ILi16ELi8ELi32EEENS_8epilogue11threadblock13TreeVisitor2xINSH_15VisitorAuxStoreINSH_22OutputTileThreadLayoutISD_SE_S8_Li8ELi1EEES8_LNS_15FloatRoundStyleE2EN4cute5tupleIJxNSN_1CILi1EEExEEEEEJNSI_INSH_14VisitorComputeINS_10multipliesES8_fLSM_2EvEEJNSI_INST_ISU_ffLSM_2EvEEJNSH_15VisitorAccFetchENSH_19VisitorColBroadcastISL_fNSO_IJSQ_NSP_ILi0EEEiEEELb1EEEEEENSH_19VisitorRowBroadcastISL_fNSO_IJSZ_SQ_iEEELb1EEEEEEEEENS1_11threadblock30GemmIdentityThreadblockSwizzleILi1EEELi4ENS9_21OpMultiplyAddSaturateELi1EE10SelectBaseIS1A_vEEEEvNT_6ParamsE": {
+      "ms": 4.332404000000126,
+      "chamadas": 144
+    },
+    "Optimizer.step#AdamW.step": {
+      "ms": 4.271343875000017,
+      "chamadas": 1
+    },
+    "ampere_s16816gemm_bf16_128x64_ldg8_stages_32x6_nn": {
+      "ms": 4.23213000000007,
+      "chamadas": 35
+    },
+    "ampere_s16816gemm_bf16_128x128_ldg8_stages_32x5_nn": {
+      "ms": 3.7402401249998967,
+      "chamadas": 36
+    },
+    "_Z42fmha_cutlassB_bf16_aligned_64x64_k128_sm80N22PyTorchMemEffAttention23AttentionBackwardKernelIN7cutlass4arch4Sm80ENS1_10bfloat16_tELb1ELb0ELb0ELi64ELi64ELi128ELb0EE6ParamsE": {
+      "ms": 3.6555133749999693,
+      "chamadas": 36
+    },
+    "_Z41fmha_cutlassF_bf16_aligned_64x128_rf_sm80N22PyTorchMemEffAttention15AttentionKernelIN7cutlass10bfloat16_tENS1_4arch4Sm80ELb1ELi64ELi128ELi128ELb1ELb1EE6ParamsE": {
+      "ms": 2.286549374999983,
+      "chamadas": 72
+    },
+    "ampere_bf16_s1688gemm_bf16_256x64_sliced1x2_ldg8_f2f_tn": {
+      "ms": 2.025699624999761,
+      "chamadas": 144
+    },
+    "_ZN5comfy47_GLOBAL__N__1a5a334f_14_int8_linear_cu_b4a374cb28quantize_int8_rowwise_kernelI13__nv_bfloat16Li256ELb0EEEvPKT_PaPfiy": {
+      "ms": 1.7500007499995964,
+      "chamadas": 242
+    },
+    "_ZN7cutlass7Kernel2I68cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_128x2_tn_align8EEvNT_6ParamsE": {
+      "ms": 1.4484531250000223,
+      "chamadas": 288
+    },
+    "_ZN5comfy47_GLOBAL__N__1a5a334f_14_int8_linear_cu_b4a374cb28quantize_int8_rowwise_kernelI13__nv_bfloat16Li512ELb0EEEvPKT_PaPfiy": {
+      "ms": 1.3676355000002507,
+      "chamadas": 122
+    },
+    "triton_poi_fused__unsafe_view_add_mul_native_dropout_native_dropout_backward_silu_silu_backward_view_20": {
+      "ms": 1.3557377500001093,
+      "chamadas": 35
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_64x1_nt_align8EEvNT_6ParamsE": {
+      "ms": 1.330348375000325,
+      "chamadas": 180
+    },
+    "_ZN8cublasLt19splitKreduce_kernelILi32ELi16Ei13__nv_bfloat16S1_fS1_Lb0ES1_S1_S1_Lb1ELb0ELb0ELb0EEEvNS_18cublasSplitKParamsIT4_EEPKT2_PKT8_PT7_PT3_PKS3_SG_PKT9_S7_PSH_PvxPS3_PiSM_SM_SG_SG_SG_SG_SG_": {
+      "ms": 1.1244567500007236,
+      "chamadas": 540
+    },
+    "_ZN7cutlass7Kernel2I66cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x64_32x6_nn_align8EEvNT_6ParamsE": {
+      "ms": 0.9749928749998635,
+      "chamadas": 108
+    },
+    "_ZN7cutlass7Kernel2I68cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_128x2_nt_align8EEvNT_6ParamsE": {
+      "ms": 0.9083029999998016,
+      "chamadas": 144
+    },
+    "triton_poi_fused__unsafe_view_add_mul_native_dropout_silu_10": {
+      "ms": 0.8530932500000427,
+      "chamadas": 37
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_mean_mul_native_dropout_rsqrt_9": {
+      "ms": 0.8230276249999079,
+      "chamadas": 72
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_16x16_32x1_nn_align2EEvNT_6ParamsE": {
+      "ms": 0.8200874999999896,
+      "chamadas": 12
+    },
+    "_ZN7cutlass7Kernel2I66cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x64_32x6_tn_align8EEvNT_6ParamsE": {
+      "ms": 0.740521624999853,
+      "chamadas": 72
+    },
+    "triton_poi_fused__unsafe_view_mul_silu_silu_backward_9": {
+      "ms": 0.7399071250000452,
+      "chamadas": 4
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x1_tn_align8EEvNT_6ParamsE": {
+      "ms": 0.7265411250000459,
+      "chamadas": 181
+    },
+    "_ZN8cublasLt19splitKreduce_kernelILi32ELi16Eif13__nv_bfloat16fS1_Lb0ES1_S1_S1_Lb1ELb0ELb0ELb0EEEvNS_18cublasSplitKParamsIT4_EEPKT2_PKT8_PT7_PT3_PKS3_SG_PKT9_S7_PSH_PvxPS3_PiSM_SM_SG_SG_SG_SG_SG_": {
+      "ms": 0.638626374999998,
+      "chamadas": 71
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_16x16_32x1_nt_align2EEvNT_6ParamsE": {
+      "ms": 0.5726268749999326,
+      "chamadas": 8
+    },
+    "_ZN2at6native54_GLOBAL__N__bdbaa4e2_21_ForeachPointwiseOp_cu_ef478fac25multi_tensor_apply_kernelINS1_28TensorListScalarListMetadataIfLi3EEENS1_28PointwiseOpScalarListFunctorIN3c108BFloat16ELi3ELi3ELi0EEEJSt7dividesIfEEEEvT_T0_DpT1_": {
+      "ms": 0.5630186250000152,
+      "chamadas": 2
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_32x1_nn_align8EEvNT_6ParamsE": {
+      "ms": 0.5544722499997861,
+      "chamadas": 143
+    },
+    "ampere_bf16_s1688gemm_bf16_256x64_sliced1x2_ldg8_f2f_nn": {
+      "ms": 0.5345622500000754,
+      "chamadas": 36
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_div_expand_mean_mul_native_dropout_native_dropout_backward_pow_rsqrt_sum_view_13": {
+      "ms": 0.4918026249999857,
+      "chamadas": 36
+    },
+    "_ZN7cutlass7Kernel2I67cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_16x16_64x1_tn_align2EEvNT_6ParamsE": {
+      "ms": 0.456986000000029,
+      "chamadas": 12
+    },
+    "_ZN2at6native54_GLOBAL__N__bdbaa4e2_21_ForeachPointwiseOp_cu_ef478fac25multi_tensor_apply_kernelINS1_18TensorListMetadataILi3EEENS1_24PointwiseOpScalarFunctorIN3c108BFloat16ELi3ELi3ELi0EEEJSt10multipliesIfEfEEEvT_T0_DpT1_": {
+      "ms": 0.44407800000007047,
+      "chamadas": 2
+    },
+    "triton_poi_fused_linear_int8_mul_silu_8": {
+      "ms": 0.4435701250000129,
+      "chamadas": 4
+    },
+    "_ZN2at6native52_GLOBAL__N__d2de6f4c_19_ForeachTernaryOp_cu_5285c63625multi_tensor_apply_kernelINS1_18TensorListMetadataILi2EEENS1_22TernaryOpScalarFunctorIN3c108BFloat16ELi2ELi2ELi0EEEJNS0_11LerpFunctorIfEEfEEEvT_T0_DpT1_": {
+      "ms": 0.43860599999995975,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIhEESt5arrayIPcLy1EEEEviT0_T1_": {
+      "ms": 0.3812132500001335,
+      "chamadas": 36
+    },
+    "_ZN7cutlass7Kernel2I68cutlass_80_wmma_tensorop_bf16_s161616gemm_bf16_32x32_128x2_nn_align8EEvNT_6ParamsE": {
+      "ms": 0.3763466249999892,
+      "chamadas": 72
+    },
+    "triton_poi_fused__to_copy__unsafe_view_add_cat_clone_mul_neg_select_select_backward_squeeze_sum_transpose_view_14": {
+      "ms": 0.33482924999993335,
+      "chamadas": 4
+    },
+    "triton_poi_fused__fused_rms_norm__to_copy__unsafe_view_add_mul_select_split_with_sizes_sub_view_3": {
+      "ms": 0.3290096249999433,
+      "chamadas": 72
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_mean_mul_native_dropout_rsqrt_11": {
+      "ms": 0.32897762500006045,
+      "chamadas": 35
+    },
+    "triton_red_fused__to_copy_add_mean_mul_native_dropout_rsqrt_0": {
+      "ms": 0.31435612500002436,
+      "chamadas": 36
+    },
+    "_ZN2at6native61_GLOBAL__N__39abe1cd_28_ForeachBinaryOpScalarList_cu_dda10a6925multi_tensor_apply_kernelINS1_28TensorListScalarListMetadataIfLi1EEENS1_25BinaryOpScalarListFunctorIN3c108BFloat16ELi1ELi1ELi0EEEJSt7dividesIfEEEEvT_T0_DpT1_": {
+      "ms": 0.2966973749999961,
+      "chamadas": 1
+    },
+    "_ZN2at6native57_GLOBAL__N__eeeb9840_24_ForeachBinaryOpScalar_cu_86b9896c25multi_tensor_apply_kernelINS1_18TensorListMetadataILi1EEENS1_21BinaryOpScalarFunctorIN3c108BFloat16ELi1ELi1ELi0EEEJSt10multipliesIfEfEEEvT_T0_DpT1_": {
+      "ms": 0.29586937500000204,
+      "chamadas": 1
+    },
+    "_ZN2at6native57_GLOBAL__N__eeeb9840_24_ForeachBinaryOpScalar_cu_86b9896c25multi_tensor_apply_kernelINS1_18TensorListMetadataILi1EEENS1_21BinaryOpScalarFunctorIN3c108BFloat16ELi1ELi1ELi0EEEJSt4plusIfEfEEEvT_T0_DpT1_": {
+      "ms": 0.29571337499994477,
+      "chamadas": 1
+    },
+    "_ZN2at6native50_GLOBAL__N__79042448_17_ForeachUnaryOp_cu_77fe623d25multi_tensor_apply_kernelINS1_18TensorListMetadataILi2EEENS1_14UnaryOpFunctorIN3c108BFloat16ELi2ELi1ELi1EEEJNS0_4SqrtIfEEEEEvT_T0_DpT1_": {
+      "ms": 0.2954852500000088,
+      "chamadas": 1
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_div_expand_mean_mul_native_dropout_native_dropout_backward_pow_rsqrt_sum_view_19": {
+      "ms": 0.2924975000000741,
+      "chamadas": 35
+    },
+    "_ZN2at6native63_GLOBAL__N__305b55ac_30_ForeachBinaryOpScalarTensor_cu_64fe0ca525multi_tensor_apply_kernelINS1_18TensorListMetadataILi1EEENS1_27BinaryOpScalarTensorFunctorIN3c108BFloat16ELi1ELi1ELi0EEEJSt10multipliesIfEPS7_fEEEvT_T0_DpT1_": {
+      "ms": 0.29232924999997706,
+      "chamadas": 1
+    },
+    "triton_poi_fused__scaled_dot_product_efficient_attention_backward__to_copy__unsafe_view_add_clone_expand_mul_native_dropout_native_dropout_backward_split_with_sizes_stack_transpose_unsqueeze_view_14": {
+      "ms": 0.2898927499999609,
+      "chamadas": 36
+    },
+    "triton_poi_fused__unsafe_view_add_clone_expand_mul_split_with_sizes_transpose_unsqueeze_view_7": {
+      "ms": 0.28774987500014415,
+      "chamadas": 72
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_div_expand_mean_mul_pow_rsqrt_sum_10": {
+      "ms": 0.2874415000000263,
+      "chamadas": 4
+    },
+    "ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_64x3_nt": {
+      "ms": 0.286901374999974,
+      "chamadas": 36
+    },
+    "triton_per_fused__fused_rms_norm__fused_rms_norm_backward__to_copy__unsafe_view_add_cat_clone_mul_neg_select_select_backward_split_with_sizes_squeeze_sum_transpose_view_16": {
+      "ms": 0.275817499999941,
+      "chamadas": 35
+    },
+    "triton_poi_fused_native_dropout_transpose_view_12": {
+      "ms": 0.2543441249999387,
+      "chamadas": 35
+    },
+    "_ZN2at6native43_GLOBAL__N__bcfaaeff_10_SoftMax_cu_0af7be2120cunn_SoftMaxBackwardILi8EN3c108BFloat16EfS4_NS1_26LogSoftMaxBackwardEpilogueEEEvPT0_PKT2_SA_x": {
+      "ms": 0.24301299999997172,
+      "chamadas": 1
+    },
+    "triton_poi_fused__fused_rms_norm__to_copy__unsafe_view_add_mul_select_split_with_sizes_sub_view_4": {
+      "ms": 0.23960625000030722,
+      "chamadas": 72
+    },
+    "_ZN2at6native43_GLOBAL__N__bcfaaeff_10_SoftMax_cu_0af7be2119cunn_SoftMaxForwardILi8EN3c108BFloat16EfS4_NS1_25LogSoftMaxForwardEpilogueEEEvPT2_PKT0_i": {
+      "ms": 0.23662099999999556,
+      "chamadas": 1
+    },
+    "triton_per_fused__fused_rms_norm__unsafe_view_add_mul_split_with_sizes_view_1": {
+      "ms": 0.20417237500011992,
+      "chamadas": 72
+    },
+    "triton_poi_fused__to_copy_clone_expand_stack_transpose_unsqueeze_view_6": {
+      "ms": 0.20376062500029685,
+      "chamadas": 72
+    },
+    "triton_poi_fused__to_copy_stack_view_5": {
+      "ms": 0.19574100000000272,
+      "chamadas": 72
+    },
+    "triton_poi_fused_native_dropout_transpose_view_8": {
+      "ms": 0.18008087499985073,
+      "chamadas": 36
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_div_expand_mean_mul_pow_rsqrt_sum_15": {
+      "ms": 0.1522484999999797,
+      "chamadas": 4
+    },
+    "triton_red_fused__to_copy_add_linear_int8_mean_mul_rsqrt_9": {
+      "ms": 0.14665249999999286,
+      "chamadas": 3
+    },
+    "_ZN2at6native51_GLOBAL__N__127a1cc8_18_ForeachReduceOp_cu_b83ec48c25multi_tensor_apply_kernelINS1_18TensorListMetadataILi1EEENS0_13LpNormFunctorIN3c108BFloat16ELNS0_8NormTypeE2ES7_Li1ELi1ELi0EEEJPfiEEEvT_T0_DpT1_": {
+      "ms": 0.14300475000000734,
+      "chamadas": 1
+    },
+    "triton_per_fused__fused_rms_norm__unsafe_view_add_mul_split_with_sizes_view_2": {
+      "ms": 0.14172787499999298,
+      "chamadas": 72
+    },
+    "triton_red_fused__fused_rms_norm__fused_rms_norm_backward__to_copy__unsafe_view_add_cat_clone_mul_neg_select_select_backward_split_with_sizes_squeeze_sum_transpose_view_15": {
+      "ms": 0.1417247499999794,
+      "chamadas": 35
+    },
+    "triton_poi_fused__to_copy_add_clone_mul_select_split_with_sizes_stack_sub_transpose_view_2": {
+      "ms": 0.1356732499999398,
+      "chamadas": 4
+    },
+    "triton_poi_fused__fused_rms_norm__fused_rms_norm_backward__unsafe_view_add_cat_clone_mul_split_with_sizes_squeeze_sum_transpose_view_17": {
+      "ms": 0.1309718749999629,
+      "chamadas": 35
+    },
+    "triton_poi_fused_clone_linear_int8_transpose_view_5": {
+      "ms": 0.1272524999999623,
+      "chamadas": 4
+    },
+    "triton_poi_fused__to_copy_add_clone_expand_mul_select_split_with_sizes_stack_sub_transpose_unsqueeze_view_3": {
+      "ms": 0.12669225000003007,
+      "chamadas": 4
+    },
+    "triton_poi_fused_clone_linear_int8_transpose_view_6": {
+      "ms": 0.12620874999999795,
+      "chamadas": 4
+    },
+    "triton_poi_fused__unsafe_view_clone_transpose_view_11": {
+      "ms": 0.12318837499999427,
+      "chamadas": 4
+    },
+    "triton_red_fused__to_copy_add_mean_mul_rsqrt_7": {
+      "ms": 0.12124887499997566,
+      "chamadas": 4
+    },
+    "triton_red_fused__to_copy_add_mean_mul_rsqrt_6": {
+      "ms": 0.12107249999995474,
+      "chamadas": 4
+    },
+    "Memset (Device)": {
+      "ms": 0.11518524999993701,
+      "chamadas": 208
+    },
+    "triton_poi_fused_linear_int8_mul_silu_7": {
+      "ms": 0.11109649999999965,
+      "chamadas": 1
+    },
+    "triton_poi_fused_clone_expand_split_with_sizes_transpose_unsqueeze_view_4": {
+      "ms": 0.09436049999996976,
+      "chamadas": 4
+    },
+    "triton_poi_fused__to_copy_add_mul_neg_select_select_backward_squeeze_sum_transpose_view_13": {
+      "ms": 0.09226049999993302,
+      "chamadas": 4
+    },
+    "triton_poi_fused_mul_view_18": {
+      "ms": 0.08911299999989751,
+      "chamadas": 35
+    },
+    "triton_red_fused__to_copy_add_linear_int8_mean_mul_rsqrt_0": {
+      "ms": 0.08324875000002066,
+      "chamadas": 4
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIN3c108BFloat16EEESt5arrayIPcLy1EEEEviT0_T1_": {
+      "ms": 0.07511237499993877,
+      "chamadas": 4
+    },
+    "triton_poi_fused_clone_expand_split_with_sizes_transpose_unsqueeze_view_5": {
+      "ms": 0.07370825000001786,
+      "chamadas": 4
+    },
+    "triton_poi_fused__to_copy_add_clone_mul_select_split_with_sizes_stack_sub_transpose_view_1": {
+      "ms": 0.0681402500000113,
+      "chamadas": 2
+    },
+    "triton_poi_fused__to_copy_add_clone_mul_select_split_with_sizes_stack_sub_transpose_view_16": {
+      "ms": 0.0676401249999817,
+      "chamadas": 1
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_div_expand_mul_pow_sum_8": {
+      "ms": 0.06071249999997417,
+      "chamadas": 1
+    },
+    "triton_poi_fused__to_copy_add_clone_expand_mul_select_split_with_sizes_stack_sub_transpose_unsqueeze_view_2": {
+      "ms": 0.059368374999978185,
+      "chamadas": 2
+    },
+    "_ZN2at6native43_GLOBAL__N__bcfaaeff_10_SoftMax_cu_0af7be2122cunn_SoftMaxForwardRegIN3c108BFloat16EfS4_NS1_25LogSoftMaxForwardEpilogueExLi4EEEvPT1_PKT_T3_": {
+      "ms": 0.05288412499997139,
+      "chamadas": 1
+    },
+    "_ZN2at6native43_GLOBAL__N__bcfaaeff_10_SoftMax_cu_0af7be2124cunn_SoftMaxBackwardSmemILi8EN3c108BFloat16EfS4_NS1_26LogSoftMaxBackwardEpilogueEEEvPT0_PKT2_SA_x": {
+      "ms": 0.04817225000002145,
+      "chamadas": 1
+    },
+    "triton_poi_fused__unsafe_view_add_mul_native_dropout_native_dropout_backward_silu_silu_backward_view_12": {
+      "ms": 0.0433882500000218,
+      "chamadas": 1
+    },
+    "triton_poi_fused__to_copy_add_clone_expand_mul_select_split_with_sizes_stack_sub_transpose_unsqueeze_view_17": {
+      "ms": 0.04214037500000813,
+      "chamadas": 1
+    },
+    "triton_red_fused__to_copy_add_linear_int8_mean_mul_rsqrt_10": {
+      "ms": 0.03968024999998488,
+      "chamadas": 1
+    },
+    "triton_red_fused__to_copy_add_cat_embedding_linear_int8_mean_mul_rsqrt_slice_unsqueeze_0": {
+      "ms": 0.03070049999999446,
+      "chamadas": 1
+    },
+    "triton_per_fused_add_bitwise_and_bitwise_not_div_embedding_expand_ge_index_put_le_lift_fresh_select_stack_sum_unsqueeze_where_2": {
+      "ms": 0.0260599999999954,
+      "chamadas": 1
+    },
+    "triton_per_fused__softmax_add_mul_prepare_softmax_online_view_4": {
+      "ms": 0.025363750000035906,
+      "chamadas": 4
+    },
+    "triton_poi_fused_add_embedding_select_1": {
+      "ms": 0.01970025000000851,
+      "chamadas": 1
+    },
+    "_ZN2at6native39_GLOBAL__N__a9487f89_7_Loss_cu_41dc859c38nll_loss_forward_reduce_cuda_kernel_2dIN3c108BFloat16EfxEEvPT_S6_PKS5_PKT1_S8_bxxxx": {
+      "ms": 0.016487999999979366,
+      "chamadas": 2
+    },
+    "triton_per_fused__softmax_backward_data_mul_view_12": {
+      "ms": 0.015743999999987865,
+      "chamadas": 4
+    },
+    "_ZN2at6native43_GLOBAL__N__ec01c160_10_Nonzero_cu_cba1aaa013write_indicesIxEEvPxNS1_10TensorDimsIT_EEiS5_S3_x": {
+      "ms": 0.013024249999973108,
+      "chamadas": 4
+    },
+    "_ZN2at6native24index_elementwise_kernelILi128ELi4EZNS0_16gpu_index_kernelIZNS0_17index_kernel_implINS0_10OpaqueTypeILi8EEEEEvRNS_18TensorIteratorBaseEN3c108ArrayRefIxEESA_EUlPcPKcxE_EEvS7_SA_SA_RKT_bEUliE_EEvxT1_": {
+      "ms": 0.011976000000072418,
+      "chamadas": 2
+    },
+    "triton_poi_fused__fused_rms_norm__fused_rms_norm_backward__unsafe_view_add_cat_clone_mul_split_with_sizes_squeeze_sum_transpose_view_25": {
+      "ms": 0.011048124999982974,
+      "chamadas": 1
+    },
+    "_ZN2at6native39_GLOBAL__N__a9487f89_7_Loss_cu_41dc859c39nll_loss_backward_reduce_cuda_kernel_2dIN3c108BFloat16ExEEvPT_PKS5_PKT0_S8_S8_biixx": {
+      "ms": 0.010739999999992506,
+      "chamadas": 2
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_div_expand_mul_pow_sum_view_11": {
+      "ms": 0.008811875000004875,
+      "chamadas": 1
+    },
+    "triton_per_fused__softmax_add_mul_prepare_softmax_online_view_3": {
+      "ms": 0.008716124999977183,
+      "chamadas": 2
+    },
+    "triton_per_fused__fused_rms_norm__fused_rms_norm_backward__to_copy__unsafe_view_add_mul_neg_select_select_backward_split_with_sizes_transpose_view_24": {
+      "ms": 0.008255874999973458,
+      "chamadas": 1
+    },
+    "_ZN14at_cuda_detail3cub6detail6select23DeviceSelectSweepKernelINS2_10policy_hubIxbiLb0ELNS0_10SelectImplE0EE10Policy1000EN6thrust45THRUST_300001_SM_750_800_860_900_1000_1200_NS17counting_iteratorIxNS9_11use_defaultESB_SB_EENS9_18transform_iteratorIN2at6native43_GLOBAL__N__ec01c160_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbSB_SB_EEPxPiNS0_13ScanTileStateIiLb1EEENS0_8NullTypeESQ_iNS2_19streaming_context_tIxLb1EEELS5_0EEEvT0_T1_T2_T3_T4_T5_T6_T7_iT8_NS1_7vsmem_tE": {
+      "ms": 0.007947875000020758,
+      "chamadas": 4
+    },
+    "triton_per_fused__softmax_add_mul_prepare_softmax_online_view_18": {
+      "ms": 0.007472125000014785,
+      "chamadas": 1
+    },
+    "triton_red_fused__to_copy_add_mean_mul_native_dropout_rsqrt_21": {
+      "ms": 0.007232000000032713,
+      "chamadas": 1
+    },
+    "Memcpy DtoH (Device -> Pinned)": {
+      "ms": 0.006572124999898961,
+      "chamadas": 6
+    },
+    "_ZN2at6native24index_elementwise_kernelILi128ELi4EZNS0_16gpu_index_kernelIZNS0_17index_kernel_implINS0_10OpaqueTypeILi2EEEEEvRNS_18TensorIteratorBaseEN3c108ArrayRefIxEESA_EUlPcPKcxE_EEvS7_SA_SA_RKT_bEUliE_EEvxT1_": {
+      "ms": 0.006560125000027256,
+      "chamadas": 1
+    },
+    "_ZN14at_cuda_detail3cub6detail6reduce28DeviceReduceSingleTileKernelINS2_10policy_hubIiyN4cuda3std3__44plusIvEEE10Policy1000EN6thrust45THRUST_300001_SM_750_800_860_900_1000_1200_NS18transform_iteratorIN2at6native43_GLOBAL__N__ec01c160_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbNSD_11use_defaultESM_EEPiyS9_iiNS7_10__identityEEEvT0_T1_T2_T3_T4_T6_": {
+      "ms": 0.00635624999996071,
+      "chamadas": 4
+    },
+    "triton_red_fused__to_copy__unsafe_view_add_mean_mul_rsqrt_13": {
+      "ms": 0.006244000000001506,
+      "chamadas": 1
+    },
+    "_ZN2at6native40_GLOBAL__N__27eda9f4_8_Shape_cu_85d9f36c35CatArrayBatchedCopy_alignedK_contigINS1_10OpaqueTypeILj2EEEjLi1ELi128ELi1ELi8EEEvPT_NS1_25CatArrInputTensorMetadataIS5_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_": {
+      "ms": 0.005732124999940425,
+      "chamadas": 3
+    },
+    "_ZN14at_cuda_detail3cub6detail10radix_sort31DeviceRadixSortSingleTileKernelINS1_5radix10policy_hubIxN2at4cuda3cub6detail10OpaqueTypeILi8EEEyE10Policy1000ELNS0_9SortOrderE0ExSB_yNS1_21identity_decomposer_tEEEvPKT1_PSG_PKT2_PSK_T3_iiT4_": {
+      "ms": 0.005492000000009284,
+      "chamadas": 1
+    },
+    "triton_poi_fused_native_dropout_transpose_view_22": {
+      "ms": 0.0047960000000020955,
+      "chamadas": 1
+    },
+    "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_EEvS4_RKT_EUliE_EEviT1_": {
+      "ms": 0.00462799999998424,
+      "chamadas": 1
+    },
+    "_ZN14at_cuda_detail3cub6detail4scan23DeviceCompactInitKernelINS0_13ScanTileStateIiLb1EEEPiEEvT_iT0_": {
+      "ms": 0.0042198749999543,
+      "chamadas": 4
+    },
+    "_ZN2at6native14lpnorm_cleanupIN3c108BFloat16ELNS0_8NormTypeE2ES3_Lb1EfEEvPKT3_NS0_19TensorListAddressesEi": {
+      "ms": 0.004107999999989261,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_13BUnaryFunctorIxxxZZZNS0_21remainder_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE_clEvENKUlvE2_clEvEUlxxE_EESt5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0041038750000170696,
+      "chamadas": 2
+    },
+    "triton_red_fused__fused_rms_norm__fused_rms_norm_backward__to_copy__unsafe_view_add_mul_neg_select_select_backward_split_with_sizes_squeeze_sum_transpose_view_23": {
+      "ms": 0.0037199999999938884,
+      "chamadas": 1
+    },
+    "_ZN44_GLOBAL__N__99c14716_11_Indexing_cu_2a2c434e24indexing_backward_kernelIN3c108BFloat16ELi4EEEvPKxS4_PKT_PS5_xxxxb": {
+      "ms": 0.0031600000000144065,
+      "chamadas": 1
+    },
+    "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIN3c108BFloat16ENS0_10NormTwoOpsIS4_fS4_Lb1EEEjS4_Li4ELi4EEEEEvT1_": {
+      "ms": 0.003076000000051863,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_13AUnaryFunctorIxxxNS0_15binary_internal10MulFunctorIxEEEESt5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0030361249999550635,
+      "chamadas": 2
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_21compare_scalar_kernelIxEEvRNS_18TensorIteratorBaseENS0_50_GLOBAL__N__2ac0fdad_17_CompareKernels_cu_8f1b29aa6OpTypeET_EUlxE_St5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0028559999999470164,
+      "chamadas": 2
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_13BUnaryFunctorIxxxZZZNS0_15binary_internal21div_trunc_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE_clEvENKUlvE2_clEvEUlxxE_EESt5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0020319999999865103,
+      "chamadas": 1
+    },
+    "_ZN2at6native60_GLOBAL__N__ba35ddcb_27_DistributionRandomKernel_cu_34a2243443distribution_elementwise_grid_stride_kernelIyLi2EZZZNS0_9templates4cuda21random_from_to_kernelIPNS_17CUDAGeneratorImplEEEvRNS_18TensorIteratorBaseEyxT_ENKUlvE_clEvENKUlvE2_clEvEUlP24curandStatePhilox4_32_10E_ZNS1_27distribution_nullary_kernelIxy10ulonglong2S7_SF_ZZZS5_IS7_EvS9_yxSA_ENKSB_clEvENKSC_clEvEUlyE_EEvS9_T2_RKT3_T4_EUliyE_EEvxNS_15PhiloxCudaStateET1_SJ_": {
+      "ms": 0.0019201249999935043,
+      "chamadas": 1
+    },
+    "triton_per_fused_any_0": {
+      "ms": 0.001827999999979511,
+      "chamadas": 1
+    },
+    "triton_poi_fused_bitwise_and_ge_le_select_0": {
+      "ms": 0.001588000000003376,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_15CUDAFunctor_addIxEESt5arrayIPcLy3EEEEviT0_T1_": {
+      "ms": 0.0015839999999861902,
+      "chamadas": 1
+    },
+    "triton_poi_fused_logical_not_scalar_tensor_where_zeros_1": {
+      "ms": 0.0015721249999915018,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_22reciprocal_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE_clEvENKUlvE4_clEvEUlN3c108BFloat16EE_St5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0015719999999819266,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13BinaryFunctorIbbbNS0_17BitwiseAndFunctorIbEEEESt5arrayIPcLy3EEEEviT0_T1_": {
+      "ms": 0.0014839999999876454,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_49_GLOBAL__N__a62a4dcd_16_TensorCompare_cu_71e06f4e19launch_clamp_scalarERNS_18TensorIteratorBaseEN3c106ScalarES6_NS0_6detail11ClampLimitsEENKUlvE_clEvENKUlvE7_clEvEUlNS5_8BFloat16EE_St5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0014758749999709835,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIN3c108BFloat16EEESt5arrayIPcLy3EEEEviT0_T1_": {
+      "ms": 0.0014680000000043946,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_21CUDAFunctorOnSelf_addIN3c108BFloat16EEESt5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.001324125000002823,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13AUnaryFunctorIN3c108BFloat16ES4_S4_NS0_15binary_internal10MulFunctorIfEEEESt5arrayIPcLy2EEEEviT0_T1_": {
+      "ms": 0.0013158750000329747,
+      "chamadas": 1
+    },
+    "_ZN50_GLOBAL__N__35dbd4de_17_RangeFactories_cu_4cc9e74429elementwise_kernel_with_indexIiZZZN2at6native15arange_cuda_outERKN3c106ScalarES6_S6_RNS1_6TensorEENKUlvE_clEvENKUlvE2_clEvEUlxE_EEvT_T0_PN15function_traitsISD_E11result_typeE": {
+      "ms": 0.0011960000000053696,
+      "chamadas": 1
+    },
+    "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIfEESt5arrayIPcLy1EEEEviT0_T1_": {
+      "ms": 0.0011758750000117287,
+      "chamadas": 1
+    }
+  }
+}

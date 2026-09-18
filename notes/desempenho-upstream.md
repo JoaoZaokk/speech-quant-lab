@@ -1,4 +1,4 @@
-<!-- Publicado em github.com/JoaoZaokk/ptbr-audio-lab -->
+<!-- Publicado em github.com/JoaoZaokk/speech-quant-lab -->
 
 # Três coisas de terceiros que aceleram o S2 Pro e ninguém mergeou
 

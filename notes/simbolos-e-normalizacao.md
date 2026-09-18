@@ -1,4 +1,4 @@
-<!-- Publicado em github.com/JoaoZaokk/ptbr-audio-lab -->
+<!-- Publicado em github.com/JoaoZaokk/speech-quant-lab -->
 
 # O que cada símbolo produz no s2-pro
 

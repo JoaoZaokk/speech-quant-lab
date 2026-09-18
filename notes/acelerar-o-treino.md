@@ -1,4 +1,4 @@
-<!-- Publicado em github.com/JoaoZaokk/ptbr-audio-lab -->
+<!-- Publicado em github.com/JoaoZaokk/speech-quant-lab -->
 
 # 5x no treino do S2 Pro numa RTX 3090 — e os quatro erros de medição no caminho
 
@@ -7,6 +7,9 @@ Levantado em 2026-09-18 treinando LoRA no
 (DualAR, 36 camadas Slow + 4 Fast, `dim=2560`, `intermediate_size=9728`,
 `vocab_size=155776`), numa RTX 3090 (sm86, 24 GB) com Python 3.13,
 torch 2.13.0+cu130 e Triton no Windows.
+
+O código que produziu cada número está em [`bench/`](../bench) e
+[`accel/`](../accel), e a saída crua em [`reports/`](../reports).
 
 Tudo marcado **[MEDIDO]** tem número e método. O que não tem, está marcado como
 julgamento. Metade desta nota é sobre medições minhas que estavam erradas — elas
@@ -185,7 +188,7 @@ blocos o estrago não aparecia, porque o `gradient_checkpointing` já torna aque
 trecho opaco. Só apareceu quando a **cabeça** entrou — ela fica fora do
 checkpoint, no caminho direto do backward.
 
-Conserto — registrar o autograd **no op**:
+Conserto — registrar o autograd **no op** ([`accel/int8_linear.py`](../accel/int8_linear.py)):
 
 ```python
 @torch.library.custom_op("meu::linear_int8", mutates_args=())
@@ -337,9 +340,12 @@ rodou por último. Alterne (A,B,A,B) e reporte o espalhamento *do braço de
 referência* na mesma tabela. Ganho menor que o espalhamento não foi medido, foi
 sorteado.
 
-**Mínimo, não mediana, quando há interferência.** Um antivírus varrendo os
-gigabytes de checkpoint que cada montagem lê sobe a 100% de um núcleo. Num passo
-limitado por CPU isso entra direto no cronômetro. A interferência é aditiva e
+**Mínimo, não mediana, quando há interferência.** O Windows Defender
+(`MsMpEng.exe`) sobe a 100% de um núcleo varrendo os ~10 GB de safetensors que
+cada montagem do modelo lê. Num passo limitado por CPU isso entra direto no
+cronômetro — e o Defender roda como Protected Process, então o Gerenciador de
+Tarefas não o mata; ou se exclui a pasta (`Add-MpPreference -ExclusionPath`), ou
+se mede em volta dele. A interferência é aditiva e
 intermitente: só pode *atrasar* um passo, nunca adiantar. Sob esse regime o
 mínimo estima o tempo real e a mediana estima "tempo real + quanto a máquina
 estava ocupada". Foi o mínimo que se manteve firme (0,183 / 0,184 em baterias
@@ -362,3 +368,5 @@ aparecer no profiler com 23,81 ms e o GEMM bf16 cair de 154,19 para 79,81.
   não medi.
 - O bucket acima está **medido por forma fixa no bench**, não implementado como
   sampler.
+- `w1`/`w3` fundidos, e a política por bucket (batch e checkpointing escolhidos
+  pelo comprimento, mantendo `B × T` na faixa que cabe), são os próximos.
