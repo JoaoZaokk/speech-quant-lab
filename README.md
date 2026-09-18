@@ -275,6 +275,11 @@ de máquina em lugar nenhum.
   `erro_int8_fish.py` (erro nos logits e no gradiente da LoRA),
   `medir_padding_fish.py` (quanto do lote é padding e quanto o bucket salva),
   `matriz_aceleradores.py` (kernel × compile × batch, um processo por célula).
+  Inclui `varrer_antes_de_publicar.py`, que varre a árvore antes do `git push`
+  atrás de caminho de disco, home de usuário, token e caminho de dado — o
+  vazamento mecânico que passa despercebido por ser detalhe de ambiente que o
+  autor já nem enxerga. As isenções ficam em `.publicacao-isencoes`, cada uma
+  com o motivo ao lado.
 - **[`accel/int8_linear.py`](accel/int8_linear.py)** — troca os `nn.Linear`
   **congelados** por GEMM INT8, mantendo `weight` no `state_dict` com o mesmo
   nome. O backward vai em bf16 sobre o peso original, o que o torna exato, e o

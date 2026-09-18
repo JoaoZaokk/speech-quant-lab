@@ -1,0 +1,17 @@
+# Trechos liberados na varredura de `bench/varrer_antes_de_publicar.py`.
+# Um por linha; `#` comenta. Sem motivo escrito ao lado, nao entra aqui —
+# isencao sem justificativa vira porta dos fundos permanente.
+
+github.com/JoaoZaokk          # o handle publico, esperado no cabecalho de cada arquivo
+business@fish.audio           # contato da licenca do modelo base; publico e obrigatorio citar
+Copyright (c) 2026 JoaoZaokk  # a linha de copyright do LICENSE
+os.environ.get("FISH_CKPT"    # o default generico que substituiu o caminho fixo — e' o conserto
+manifest.jsonl em vez dos     # texto de ajuda de um parametro, nao um caminho
+`24/7` `C:/x` `http://`       # exemplos de entrada que o normalizador deve deixar intactos
+Copie para `fish_speech/      # caminho DENTRO do repo do fish-speech; e' instrucao de uso
+
+# O proprio scanner contem os padroes que procura e casa consigo mesmo.
+# Liberadas as linhas especificas, nao o arquivo inteiro:
+e' o que separa `C:/Users` de   # comentario explicando o regex de letra de drive
+uma pasta de saida com arquivo  # comentario explicando o regex de caminho de dado
+home de usuario": re.compile   # a definicao do proprio padrao de home
