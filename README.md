@@ -234,6 +234,13 @@ LICENSES.md    as licenças das fontes usadas
   patches de terceiros, abertos e não mergeados, que aceleram o S2 Pro e cortam
   VRAM. Crédito dos autores; aqui é só o mapa e o motivo de `git log` não
   mostrar.
+- **[`notes/acelerar-o-treino.md`](notes/acelerar-o-treino.md)** — 5x no passo
+  de treino numa RTX 3090, medido braço a braço: onde o tempo está de verdade
+  (88,7% dos kernels duram menos de 10 µs), por que `torch._int_mm` é mais lento
+  que bf16, por que uma `autograd.Function` em Python anula o ganho sob
+  `torch.compile`, e por que ordenar o lote por comprimento vale mais que
+  packing. Inclui o que **não** funcionou e os quatro erros de medição que quase
+  viraram número publicado.
 
 **O que não está, de propósito:** áudio, pesos, manifests, os scripts de
 aquisição e curadoria, e a configuração da máquina. O áudio de treino inclui
